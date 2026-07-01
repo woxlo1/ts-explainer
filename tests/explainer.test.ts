@@ -95,4 +95,13 @@ describe("explainDiagnostic", () => {
     expect(result.matchedPatternId).toBe("possibly-undefined-access");
     expect(result.explanation).toContain("undefined");
   });
+
+  it("explains TS2540 (readonly cannot assign)", () => {
+    const result = explainDiagnostic({
+      file: "a.ts", line: 1, column: 1, code: "TS2540",
+      rawMessage: "Cannot assign to 'id' because it is a read-only property.",
+    });
+    expect(result.matchedPatternId).toBe("readonly-cannot-assign");
+    expect(result.explanation).toContain("id");
+  });
 });
