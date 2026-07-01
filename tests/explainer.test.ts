@@ -131,4 +131,13 @@ describe("explainDiagnostic", () => {
     expect(result.matchedPatternId).toBe("union-not-narrowed");
     expect(result.explanation).toContain("overlap");
   });
+
+  it("explains TS2366 (missing return type)", () => {
+    const result = explainDiagnostic({
+      file: "a.ts", line: 1, column: 1, code: "TS2366",
+      rawMessage: "Function lacks ending return statement and return type does not include 'undefined'.",
+    });
+    expect(result.matchedPatternId).toBe("missing-return-type");
+    expect(result.explanation).toContain("return");
+  });
 });
