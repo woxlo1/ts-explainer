@@ -140,4 +140,13 @@ describe("explainDiagnostic", () => {
     expect(result.matchedPatternId).toBe("missing-return-type");
     expect(result.explanation).toContain("return");
   });
+
+  it("explains TS2511 (abstract class instantiation)", () => {
+    const result = explainDiagnostic({
+      file: "a.ts", line: 1, column: 1, code: "TS2511",
+      rawMessage: "Cannot create an instance of an abstract class.",
+    });
+    expect(result.matchedPatternId).toBe("abstract-class-instantiation");
+    expect(result.explanation).toContain("abstract");
+  });
 });
