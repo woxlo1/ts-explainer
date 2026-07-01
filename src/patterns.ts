@@ -98,6 +98,16 @@ export const patterns: ErrorPattern[] = [
       `You're trying to call something as a function, but its type says it isn't callable. ` +
       `Check whether the variable actually holds a function, or if you're missing parentheses somewhere.`,
   },
+
+  {
+    id: "possibly-undefined-access",
+    code: "TS2532",
+    match: /Object is possibly 'undefined'\.?$/,
+    explain: () =>
+      `This value might be 'undefined' at this point. ` +
+      `Add a check (like 'if (value !== undefined)') or use optional chaining '?.' before accessing it.`,
+  },
 ];
+
 
 
