@@ -134,7 +134,17 @@ export const patterns: ErrorPattern[] = [
       `You're indexing into '${m[2]}' with a key of type '${m[1]}', but that type has no index signature. ` +
       `Either add an index signature to the type, or use 'keyof' to constrain the key type.`,
   },
+
+  {
+    id: "union-not-narrowed",
+    code: "TS2367",
+    match: /This condition will always return '(.+)' since the types '(.+)' and '(.+)' have no overlap\.?$/,
+    explain: (m) =>
+      `Comparing '${m[2]}' and '${m[3]}' will always be '${m[1]}' because these two types can never be equal. ` +
+      `This is usually a sign that a variable was narrowed to an unexpected type, or there's a logic error in your condition.`,
+  },
 ];
+
 
 
 
