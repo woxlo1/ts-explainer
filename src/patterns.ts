@@ -161,7 +161,17 @@ export const patterns: ErrorPattern[] = [
       `You're trying to use 'new' on an abstract class, which isn't allowed. ` +
       `Abstract classes are meant to be extended, not instantiated directly — create a concrete subclass and instantiate that instead.`,
   },
+
+  {
+    id: "conversion-may-be-mistake",
+    code: "TS2352",
+    match: /Conversion of type '(.+)' to type '(.+)' may be a mistake because neither type sufficiently overlaps with the other\./,
+    explain: (m) =>
+      `Casting '${m[1]}' to '${m[2]}' looks suspicious because these types don't share enough in common. ` +
+      `If you're sure about the cast, use 'unknown' as an intermediate step: '(value as unknown) as ${m[2]}'. Otherwise double-check your types.`,
+  },
 ];
+
 
 
 
