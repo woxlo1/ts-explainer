@@ -71,11 +71,19 @@ describe("explainDiagnostic", () => {
     expect(result.matchedPatternId).toBe("no-overload-matches");
     expect(result.explanation).toContain("overload");
   });
-});
 
   it("explains TS2551 (did you mean)", () => {
     const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2551", rawMessage: "Property 'naem' does not exist on type 'User'. Did you mean 'name'?" });
     expect(result.matchedPatternId).toBe("did-you-mean");
     expect(result.explanation).toContain("name");
+  });
+
+  it("explains TS2349 (not callable)", () => {
+    const result = explainDiagnostic({
+      file: "a.ts", line: 1, column: 1, code: "TS2349",
+      rawMessage: "This expression is not callable.",
+    });
+    expect(result.matchedPatternId).toBe("not-callable");
+    expect(result.explanation).toContain("function");
   });
 });
