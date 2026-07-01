@@ -1,4 +1,4 @@
-import type { ErrorPattern } from "./types.js";
+﻿import type { ErrorPattern } from "./types.js";
 
 export const patterns: ErrorPattern[] = [
   {
@@ -81,4 +81,13 @@ export const patterns: ErrorPattern[] = [
       `None of this function's overloads accept the arguments you're passing. ` +
       `Check the function's available signatures (hover over it in your editor) and compare them against what you're passing in — usually one argument's type is slightly off.`,
   },
+
+  {
+    id: "did-you-mean",
+    code: "TS2551",
+    match: /Property '(.+)' does not exist on type '(.+)'\. Did you mean '(.+)'\?\.?$/,
+    explain: (m) =>
+      `'.${m[1]}' doesn't exist on type '${m[2]}'. TypeScript thinks you meant '.${m[3]}' — check for a typo.`,
+  },
 ];
+
