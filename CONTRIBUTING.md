@@ -1,4 +1,4 @@
-# Contributing to tsclear
+# Contributing to ts-explainer
 
 Thanks for considering a contribution! This doc covers how to work on the project,
 including how commits and releases are handled.

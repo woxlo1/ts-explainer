@@ -22,7 +22,7 @@ async function main() {
 
   if (!raw.trim()) {
     console.error(
-      `${RED}tsclear:${RESET} no input received. Pipe tsc's output into this command, e.g.:\n  npx tsc --noEmit | npx tsclear`,
+      `${RED}ts-explainer:${RESET} no input received. Pipe tsc's output into this command, e.g.:\n  npx tsc --noEmit | npx ts-explainer`,
     );
     process.exit(1);
   }
@@ -30,7 +30,7 @@ async function main() {
   const diagnostics = parseTscOutput(raw);
 
   if (diagnostics.length === 0) {
-    console.log(`${GREEN}tsclear:${RESET} no recognizable tsc errors found in input.`);
+    console.log(`${GREEN}ts-explainer:${RESET} no recognizable tsc errors found in input.`);
     return;
   }
 
@@ -51,6 +51,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(`${RED}tsclear: unexpected error${RESET}`, err);
+  console.error(`${RED}ts-explainer: unexpected error${RESET}`, err);
   process.exit(1);
 });

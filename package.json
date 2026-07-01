@@ -1,10 +1,10 @@
 {
-  "name": "tsclear",
+  "name": "ts-explainer",
   "version": "0.1.0",
   "description": "Turns confusing TypeScript compiler errors into clear, human-readable explanations.",
   "type": "module",
   "bin": {
-    "tsclear": "./dist/cli.js"
+    "ts-explainer": "./dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,7 +15,7 @@
     "lint": "eslint src --ext .ts",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["typescript", "cli", "error", "compiler", "devtools"],
+  "keywords": ["typescript", "cli", "error", "compiler", "devtools", "tsc", "errors"],
   "license": "MIT",
   "files": ["dist"],
   "engines": {
