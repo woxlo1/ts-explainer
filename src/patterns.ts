@@ -116,7 +116,17 @@ export const patterns: ErrorPattern[] = [
       `'${m[1]}' is marked as 'readonly' and cannot be reassigned after initialization. ` +
       `If you need to change this value, remove the 'readonly' modifier from the type definition.`,
   },
+
+  {
+    id: "cannot-find-module",
+    code: "TS2307",
+    match: /Cannot find module '(.+)' or its corresponding type declarations\.?$/,
+    explain: (m) =>
+      `TypeScript can't find the module '${m[1]}'. ` +
+      `Check that the package is installed ('npm install ${m[1]}'), and if it's a third-party library, you may also need '@types/${m[1]}' for type declarations.`,
+  },
 ];
+
 
 
 
