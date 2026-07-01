@@ -122,4 +122,13 @@ describe("explainDiagnostic", () => {
     expect(result.matchedPatternId).toBe("type-has-no-index-signature");
     expect(result.explanation).toContain("index");
   });
+
+  it("explains TS2367 (union not narrowed)", () => {
+    const result = explainDiagnostic({
+      file: "a.ts", line: 1, column: 1, code: "TS2367",
+      rawMessage: "This condition will always return 'false' since the types 'string' and 'number' have no overlap.",
+    });
+    expect(result.matchedPatternId).toBe("union-not-narrowed");
+    expect(result.explanation).toContain("overlap");
+  });
 });
