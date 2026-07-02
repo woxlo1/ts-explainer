@@ -148,6 +148,25 @@ import {
 | TS4114   | Override keyword required                         |
 | TS6133   | Variable declared but never read                  |
 | TS7015   | Array index expression is not a number            |
+| TS2355   | Function must return a value                      |
+| TS2377   | Derived class constructor must call super()       |
+| TS2391   | Function implementation is missing               |
+| TS2408   | Setters cannot return a value                     |
+| TS2416   | Property incompatible with base type              |
+| TS2420   | Class incorrectly implements interface            |
+| TS2451   | Cannot redeclare block-scoped variable            |
+| TS2454   | Variable used before being assigned               |
+| TS2503   | Cannot find namespace                             |
+| TS2515   | Abstract members not implemented                  |
+| TS2533   | Object is possibly null or undefined              |
+| TS2564   | Property has no initializer                       |
+| TS2571   | Object is of type unknown                         |
+| TS2588   | Cannot assign to a constant                       |
+| TS2683   | this implicitly has type any                      |
+| TS2689   | Use implements instead of extends for interface   |
+| TS2691   | Import path cannot end with .ts extension         |
+| TS2759   | Cannot destructure property of null/undefined     |
+| TS2589   | Type instantiation is excessively deep            |
 
 More patterns are added with every release. Open an issue or PR if you keep running into an error that isn't covered yet — see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
