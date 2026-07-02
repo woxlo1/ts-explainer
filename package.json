@@ -4,7 +4,7 @@
   "description": "Turns confusing TypeScript compiler errors into clear, human-readable explanations.",
   "type": "module",
   "bin": {
-    "ts-explainer": "./dist/cli.js"
+    "ts-explainer": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
