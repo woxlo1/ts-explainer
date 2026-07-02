@@ -17,25 +17,7 @@ async function readStdin(): Promise<string> {
   return Buffer.concat(chunks).toString("utf8");
 }
 
-async function main() {
-  const raw = await readStdin();
-
-  if (!raw.trim()) {
-    console.error(
-      `${RED}ts-explainer:${RESET} no input received. Pipe tsc's output into this command, e.g.:\n  npx tsc --noEmit | npx ts-explainer`,
-    );
-    process.exit(1);
-  }
-
-  const diagnostics = parseTscOutput(raw);
-
-  if (diagnostics.length === 0) {
-    console.log(`${GREEN}ts-explainer:${RESET} no recognizable tsc errors found in input.`);
-    return;
-  }
-
-  const cleared = explainAll(diagnostics);
-
+function printText(cleared: ReturnType<typeof explainAll>): void {
   for (const d of cleared) {
     console.log(
       `${BOLD}${RED}${d.code}${RESET} ${DIM}${d.file}:${d.line}:${d.column}${RESET}`,
@@ -46,8 +28,59 @@ async function main() {
     }
     console.log("");
   }
-
   console.log(`${DIM}${cleared.length} error(s) explained.${RESET}`);
+}
+
+function printJson(cleared: ReturnType<typeof explainAll>): void {
+  const output = {
+    total: cleared.length,
+    errors: cleared.map((d) => ({
+      code: d.code,
+      file: d.file,
+      line: d.line,
+      column: d.column,
+      explanation: d.explanation,
+      raw: d.rawMessage,
+      matched: d.matchedPatternId !== null,
+    })),
+  };
+  console.log(JSON.stringify(output, null, 2));
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const useJson = args.includes("--json") || args.includes("-j");
+
+  const raw = await readStdin();
+
+  if (!raw.trim()) {
+    const msg = "no input received. Pipe tsc's output into this command, e.g.:\n  npx tsc --noEmit | npx ts-explainer";
+    if (useJson) {
+      console.error(JSON.stringify({ error: msg }));
+    } else {
+      console.error(`${RED}ts-explainer:${RESET} ${msg}`);
+    }
+    process.exit(1);
+  }
+
+  const diagnostics = parseTscOutput(raw);
+
+  if (diagnostics.length === 0) {
+    if (useJson) {
+      console.log(JSON.stringify({ total: 0, errors: [] }));
+    } else {
+      console.log(`${GREEN}ts-explainer:${RESET} no recognizable tsc errors found in input.`);
+    }
+    return;
+  }
+
+  const cleared = explainAll(diagnostics);
+
+  if (useJson) {
+    printJson(cleared);
+  } else {
+    printText(cleared);
+  }
 }
 
 main().catch((err) => {
