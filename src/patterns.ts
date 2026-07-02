@@ -251,4 +251,166 @@ export const patterns: ErrorPattern[] = [
       `Remove the type arguments, or check if you meant to call a generic function instead.`,
   },
 
+
+  {
+    id: "cannot-assign-to-const",
+    code: "TS2588",
+    match: /Cannot assign to '(.+)' because it is a constant\.?$/,
+    explain: (m) =>
+      `'${m[1]}' was declared with 'const' and cannot be reassigned. ` +
+      `Use 'let' instead of 'const' if you need to reassign it, or restructure your logic to avoid the reassignment.`,
+  },
+  {
+    id: "property-no-initializer",
+    code: "TS2564",
+    match: /Property '(.+)' has no initializer and is not definitely assigned in the constructor\.?$/,
+    explain: (m) =>
+      `'${m[1]}' is declared but never initialized. ` +
+      `Either assign a value in the constructor, give it a default value, or mark it as optional ('${m[1]}?') or definitely assigned ('${m[1]}!').`,
+  },
+  {
+    id: "object-is-unknown",
+    code: "TS2571",
+    match: /Object is of type 'unknown'\.?$/,
+    explain: () =>
+      `You're trying to use a value typed as 'unknown' without narrowing it first. ` +
+      `Use a type guard (e.g. 'typeof value === "string"' or 'instanceof') to narrow the type before accessing properties or calling methods.`,
+  },
+  {
+    id: "cannot-find-namespace",
+    code: "TS2503",
+    match: /Cannot find namespace '(.+)'\.?$/,
+    explain: (m) =>
+      `The namespace '${m[1]}' doesn't exist anywhere TypeScript can see. ` +
+      `This usually means a missing @types package or a missing triple-slash reference. Try 'npm install --save-dev @types/${m[1].toLowerCase()}'.`,
+  },
+  {
+    id: "class-incorrectly-implements-interface",
+    code: "TS2420",
+    match: /Class '(.+)' incorrectly implements interface '(.+)'\.?/,
+    explain: (m) =>
+      `'${m[1]}' claims to implement '${m[2]}' but is missing or incorrectly defining some required members. ` +
+      `Check that all properties and methods defined in '${m[2]}' are present in '${m[1]}' with matching types.`,
+  },
+  {
+    id: "function-implementation-missing",
+    code: "TS2391",
+    match: /Function implementation is missing or not immediately following the declaration\.?$/,
+    explain: () =>
+      `You've declared a function signature but haven't provided an implementation, or the implementation isn't directly after the overload signatures. ` +
+      `Add the implementation body immediately after all overload declarations.`,
+  },
+  {
+    id: "property-not-assignable-base-type",
+    code: "TS2416",
+    match: /Property '(.+)' in type '(.+)' is not assignable to the same property in base type '(.+)'\.?/,
+    explain: (m) =>
+      `'${m[2]}.${m[1]}' has a type that's incompatible with '${m[3]}.${m[1]}' from the base class or interface. ` +
+      `The overriding type must be assignable to the base type — you can't widen the type when overriding.`,
+  },
+  {
+    id: "abstract-member-not-implemented",
+    code: "TS2515",
+    match: /Non-abstract class '(.+)' does not implement all abstract members of '(.+)'\.?/,
+    explain: (m) =>
+      `'${m[1]}' extends an abstract class '${m[2]}' but hasn't implemented all of its abstract members. ` +
+      `Add implementations for all abstract methods and properties, or mark '${m[1]}' as 'abstract' itself.`,
+  },
+  {
+    id: "this-implicit-any",
+    code: "TS2683",
+    match: /'this' implicitly has type 'any' because it does not have a type annotation\.?$/,
+    explain: () =>
+      `TypeScript can't figure out what 'this' refers to in this context. ` +
+      `Add a 'this' parameter as the first parameter of the function (e.g. 'function foo(this: MyClass)'), or use an arrow function to inherit 'this' from the surrounding scope.`,
+  },
+  {
+    id: "type-instantiation-too-deep",
+    code: "TS2589",
+    match: /Type instantiation is excessively deep and possibly infinite\.?$/,
+    explain: () =>
+      `TypeScript hit a recursion limit while resolving your types — usually caused by a circular or deeply nested generic type. ` +
+      `Simplify the type, add an explicit type annotation to break the inference chain, or restructure the generic to avoid deep recursion.`,
+  },
+  {
+    id: "must-return-value",
+    code: "TS2355",
+    match: /A function whose declared type is neither 'void' nor 'any' must return a value\.?$/,
+    explain: () =>
+      `This function's return type says it should return a value, but it doesn't always do so. ` +
+      `Make sure every code path returns the correct type, or change the return type to include 'void' or 'undefined' if returning nothing is intentional.`,
+  },
+  {
+    id: "cannot-redeclare-variable",
+    code: "TS2451",
+    match: /Cannot redeclare block-scoped variable '(.+)'\.?$/,
+    explain: (m) =>
+      `'${m[1]}' has already been declared in this scope. ` +
+      `You likely have two 'let' or 'const' declarations with the same name. Remove the duplicate or rename one of them.`,
+  },
+  {
+    id: "variable-used-before-assigned",
+    code: "TS2454",
+    match: /Variable '(.+)' is used before being assigned\.?$/,
+    explain: (m) =>
+      `'${m[1]}' might not have been assigned a value by the time it's used. ` +
+      `Make sure '${m[1]}' is initialized before use, or give it a default value when declaring it.`,
+  },
+  {
+    id: "super-call-required",
+    code: "TS2377",
+    match: /Constructors for derived classes must contain a 'super' call\.?$/,
+    explain: () =>
+      `When a class extends another, its constructor must call 'super()' before accessing 'this'. ` +
+      `Add a 'super()' call as the first statement in the constructor.`,
+  },
+  {
+    id: "object-possibly-null-or-undefined",
+    code: "TS2533",
+    match: /Object is possibly 'null' or 'undefined'\.?$/,
+    explain: () =>
+      `This value could be either 'null' or 'undefined' at this point. ` +
+      `Add a check (e.g. 'if (value != null)'), use optional chaining '?.', or use a non-null assertion '!' if you're certain it's defined.`,
+  },
+  {
+    id: "extends-instead-of-implements",
+    code: "TS2689",
+    match: /Cannot extend an interface '(.+)'\.\s*Did you mean 'implements'\.?/,
+    explain: (m) =>
+      `You're using 'extends' on an interface in a class definition, but classes use 'implements' for interfaces. ` +
+      `Change 'extends ${m[1]}' to 'implements ${m[1]}'.`,
+  },
+  {
+    id: "import-path-ts-extension",
+    code: "TS2691",
+    match: /An import path cannot end with a '\.ts' extension\.?/,
+    explain: () =>
+      `Import paths should not include the '.ts' extension — TypeScript strips it during compilation. ` +
+      `Remove the '.ts' from your import path, or use '.js' if you're targeting ESM output.`,
+  },
+  {
+    id: "not-assignable-to-never",
+    code: "TS2322",
+    match: /Type '(.+)' is not assignable to type 'never'\.?$/,
+    explain: (m) =>
+      `'never' means a value that should be impossible, but you're trying to assign '${m[1]}' to it. ` +
+      `This often appears in exhaustive switch/if checks — if you're adding a new case to a union type, make sure all branches are handled.`,
+  },
+  {
+    id: "setter-return-value",
+    code: "TS2408",
+    match: /Setters cannot return a value\.?$/,
+    explain: () =>
+      `A 'set' accessor cannot return a value — setters always return 'void'. ` +
+      `Remove the return statement from your setter.`,
+  },
+  {
+    id: "destructor-null",
+    code: "TS2759",
+    match: /Cannot destructure property '(.+)' of '(.+)' as it is '(null|undefined)'\.?$/,
+    explain: (m) =>
+      `You're trying to destructure '${m[1]}' from '${m[2]}', but '${m[2]}' is '${m[3]}'. ` +
+      `Add a null check before destructuring, or use a default value: 'const { ${m[1]} } = ${m[2]} ?? {}'.`,
+  },
+
 ];
