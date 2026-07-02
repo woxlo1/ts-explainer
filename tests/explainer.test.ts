@@ -230,3 +230,129 @@ describe("explainDiagnostic - batch 4 patterns", () => {
     expect(result.explanation).toContain("type arguments");
   });
 });
+
+describe("batch 5a - TS2588, TS2564, TS2571, TS2503, TS2420", () => {
+  it("explains TS2588 (cannot assign to const)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2588",
+      rawMessage: "Cannot assign to 'MAX' because it is a constant." });
+    expect(result.matchedPatternId).toBe("cannot-assign-to-const");
+    expect(result.explanation).toContain("MAX");
+  });
+  it("explains TS2564 (property no initializer)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2564",
+      rawMessage: "Property 'name' has no initializer and is not definitely assigned in the constructor." });
+    expect(result.matchedPatternId).toBe("property-no-initializer");
+    expect(result.explanation).toContain("name");
+  });
+  it("explains TS2571 (object is unknown)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2571",
+      rawMessage: "Object is of type 'unknown'." });
+    expect(result.matchedPatternId).toBe("object-is-unknown");
+    expect(result.explanation).toContain("unknown");
+  });
+  it("explains TS2503 (cannot find namespace)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2503",
+      rawMessage: "Cannot find namespace 'NodeJS'." });
+    expect(result.matchedPatternId).toBe("cannot-find-namespace");
+    expect(result.explanation).toContain("NodeJS");
+  });
+  it("explains TS2420 (class incorrectly implements interface)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2420",
+      rawMessage: "Class 'Dog' incorrectly implements interface 'Animal'." });
+    expect(result.matchedPatternId).toBe("class-incorrectly-implements-interface");
+    expect(result.explanation).toContain("Dog");
+  });
+});
+
+describe("batch 5b - TS2391, TS2416, TS2515, TS2683, TS2589", () => {
+  it("explains TS2391 (function implementation missing)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2391",
+      rawMessage: "Function implementation is missing or not immediately following the declaration." });
+    expect(result.matchedPatternId).toBe("function-implementation-missing");
+    expect(result.explanation).toContain("implementation");
+  });
+  it("explains TS2416 (property not assignable base type)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2416",
+      rawMessage: "Property 'name' in type 'Dog' is not assignable to the same property in base type 'Animal'." });
+    expect(result.matchedPatternId).toBe("property-not-assignable-base-type");
+    expect(result.explanation).toContain("Dog");
+  });
+  it("explains TS2515 (abstract member not implemented)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2515",
+      rawMessage: "Non-abstract class 'Cat' does not implement all abstract members of 'Animal'." });
+    expect(result.matchedPatternId).toBe("abstract-member-not-implemented");
+    expect(result.explanation).toContain("Cat");
+  });
+  it("explains TS2683 (this implicit any)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2683",
+      rawMessage: "'this' implicitly has type 'any' because it does not have a type annotation." });
+    expect(result.matchedPatternId).toBe("this-implicit-any");
+    expect(result.explanation).toContain("this");
+  });
+  it("explains TS2589 (type instantiation too deep)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2589",
+      rawMessage: "Type instantiation is excessively deep and possibly infinite." });
+    expect(result.matchedPatternId).toBe("type-instantiation-too-deep");
+    expect(result.explanation).toContain("recursion");
+  });
+});
+
+describe("batch 5c - TS2355, TS2451, TS2454, TS2377, TS2533", () => {
+  it("explains TS2355 (must return value)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2355",
+      rawMessage: "A function whose declared type is neither 'void' nor 'any' must return a value." });
+    expect(result.matchedPatternId).toBe("must-return-value");
+    expect(result.explanation).toContain("return");
+  });
+  it("explains TS2451 (cannot redeclare variable)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2451",
+      rawMessage: "Cannot redeclare block-scoped variable 'count'." });
+    expect(result.matchedPatternId).toBe("cannot-redeclare-variable");
+    expect(result.explanation).toContain("count");
+  });
+  it("explains TS2454 (variable used before assigned)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2454",
+      rawMessage: "Variable 'result' is used before being assigned." });
+    expect(result.matchedPatternId).toBe("variable-used-before-assigned");
+    expect(result.explanation).toContain("result");
+  });
+  it("explains TS2377 (super call required)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2377",
+      rawMessage: "Constructors for derived classes must contain a 'super' call." });
+    expect(result.matchedPatternId).toBe("super-call-required");
+    expect(result.explanation).toContain("super()");
+  });
+  it("explains TS2533 (object possibly null or undefined)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2533",
+      rawMessage: "Object is possibly 'null' or 'undefined'." });
+    expect(result.matchedPatternId).toBe("object-possibly-null-or-undefined");
+    expect(result.explanation).toContain("null");
+  });
+});
+
+describe("batch 5d - TS2689, TS2691, TS2408, TS2759", () => {
+  it("explains TS2689 (extends instead of implements)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2689",
+      rawMessage: "Cannot extend an interface 'Serializable'. Did you mean 'implements'?" });
+    expect(result.matchedPatternId).toBe("extends-instead-of-implements");
+    expect(result.explanation).toContain("implements");
+  });
+  it("explains TS2691 (import path ts extension)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2691",
+      rawMessage: "An import path cannot end with a '.ts' extension." });
+    expect(result.matchedPatternId).toBe("import-path-ts-extension");
+    expect(result.explanation).toContain(".ts");
+  });
+  it("explains TS2408 (setter return value)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2408",
+      rawMessage: "Setters cannot return a value." });
+    expect(result.matchedPatternId).toBe("setter-return-value");
+    expect(result.explanation).toContain("setter");
+  });
+  it("explains TS2759 (destructure null)", () => {
+    const result = explainDiagnostic({ file: "a.ts", line: 1, column: 1, code: "TS2759",
+      rawMessage: "Cannot destructure property 'name' of 'user' as it is 'null'." });
+    expect(result.matchedPatternId).toBe("destructor-null");
+    expect(result.explanation).toContain("name");
+  });
+});
